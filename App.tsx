@@ -1,113 +1,96 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {
+  RefreshControl,
+  SectionList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
+interface Section {
+  title: string;
+  data: string[];
+}
 
 function App(): JSX.Element {
+  const [sections, setSections] = useState<Section[]>([]);
+  const [Refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+
+    const newSection = {
+      title: 'Title ' + (sections.length + 1),
+      data: ['Item ' + (sections.length + 1), 'Item ' + (sections.length + 1)],
+    };
+    setSections([...sections, newSection]);
+    setRefreshing(false);
+  };
+
+  // If there are no sections, create a default section
+  if (sections.length === 0) {
+    const defaultSection = {
+      title: 'Title 1',
+      data: ['Item 1', 'Item 2'],
+    };
+    setSections([defaultSection]);
+  }
+
   return (
-    <View style={styles.body}>
-      <View style={styles.Box1}>
-        <View style={styles.view1}>
-          <Text style={styles.text}>1</Text>
+    <SectionList
+      sections={sections}
+      renderItem={({item}) => <Text style={styles.text}>{item}</Text>}
+      renderSectionHeader={({section}) => (
+        <View style={styles.item}>
+          <Text style={styles.text}>{section.title}</Text>
         </View>
-        <View style={styles.view2}>
-          <Text style={styles.text}>2</Text>
-        </View>
-        <View style={styles.view3}>
-          <Text style={styles.text}>3</Text>
-        </View>
-      </View>
-      <View style={styles.Box2}>
-        <View style={styles.view4}>
-          <Text style={styles.text}>4</Text>
-        </View>
-      </View>
-      <View style={styles.Box2}>
-        <View style={styles.view5}>
-          <Text style={styles.text}>5</Text>
-        </View>
-      </View>
-      <View style={styles.Box3}>
-        <View style={styles.view6}>
-          <Text style={styles.text}>6</Text>
-        </View>
-        <View style={styles.view7}>
-          <Text style={styles.text}>7</Text>
-        </View>
-      </View>
-    </View>
+      )}
+      refreshControl={
+        <RefreshControl
+          colors={['#ff00ff']}
+          refreshing={Refreshing}
+          onRefresh={onRefresh}
+        />
+      }
+    />
+    // <View style={styles.body}>
+    //   <FlatList
+    //     keyExtractor={(item, index) => index.toString()}
+    //     data={Items}
+    //     renderItem={({item}) => (
+    //       <View style={styles.item}>
+    //         <Text style={styles.text}>{item.name}</Text>
+    //       </View>
+    //     )}
+    //     refreshControl={
+    //       <RefreshControl
+    //         colors={['#ff00ff']}
+    //         refreshing={Refreshing}
+    //         onRefresh={onRefresh}
+    //       />
+    //     }
+    //   />
+    // </View>
   );
 }
 
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#ffffff',
   },
-  view1: {
-    width: '15%',
-    height: 50,
-    flexDirection: 'row',
-    backgroundColor: '#00ffff',
+  item: {
+    margin: 10,
+    backgroundColor: '#4ae1fa',
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  view2: {
-    width: '30%',
-    height: 50,
-    backgroundColor: '#ff00ff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view3: {
-    width: '55%',
-    height: 50,
-    backgroundColor: '#ff0000',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view4: {
-    width: '100%',
-    height: 50,
-    backgroundColor: '#00c8ff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view5: {
-    width: '100%',
-    height: 50,
-    backgroundColor: '#62ff00',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view6: {
-    width: '50%',
-    backgroundColor: '#d7d417',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  view7: {
-    width: '50%',
-    backgroundColor: '#dd00ff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  Box1: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  Box2: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  Box3: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-
   text: {
-    fontSize: 20,
-    fontWeight: '700',
+    color: '#000000',
+    fontSize: 45,
+    fontStyle: 'italic',
+    margin: 10,
   },
 });
 
