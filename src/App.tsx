@@ -1,11 +1,13 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import Home from './Screen/HomePage/Home';
 import {createStackNavigator} from '@react-navigation/stack';
+
+import Home from './Screen/HomePage/Home';
 import Login from './Screen/LoginPage/Login';
-import CustomHeader from './utils/customHeader';
 import DetailsScorePage from './Screen/MatchDeatilsPage';
 import SelectOpeningPlayer from './Screen/SelectOpeningPlayerPage';
+import CustomHeader from './utils/customHeader';
+import CustomHeadingDetailsPage from './utils/custonHadingDetailsPage';
 
 const Stack = createStackNavigator();
 
@@ -16,9 +18,7 @@ function App() {
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{
-            headerShown: false,
-          }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Home"
@@ -27,21 +27,25 @@ function App() {
             headerTitle: 'Cricket Scorer',
             headerLeft: null,
             headerRight: () => <CustomHeader navigation={undefined} />,
-            headerStyle: {
-              backgroundColor: '#037c0d',
-            },
+            headerStyle: {backgroundColor: '#037c0d'},
             headerTintColor: '#ffffff',
           }}
         />
-        <Stack.Screen name="Details" component={DetailsScorePage} />
+        <Stack.Screen
+          name="Details"
+          component={DetailsScorePage}
+          options={{
+            headerTitle: () => <CustomHeadingDetailsPage />,
+            headerStyle: {backgroundColor: '#037c0d'},
+            headerTintColor: '#ffffff',
+          }}
+        />
         <Stack.Screen
           name="SelectOpeningPlayer"
           component={SelectOpeningPlayer}
           options={{
             headerTitle: 'Select Opening Player',
-            headerStyle: {
-              backgroundColor: '#037c0d',
-            },
+            headerStyle: {backgroundColor: '#037c0d'},
             headerTintColor: '#ffffff',
           }}
         />

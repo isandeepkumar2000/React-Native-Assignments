@@ -42,7 +42,7 @@ export default function Login({navigation}: LoginProps) {
   };
 
   const setData = () => {
-    if (username.length === 0) {
+    if (username) {
       Alert.alert('Warning!', 'Please Write Your Username');
     } else {
       navigation.navigate('Home');

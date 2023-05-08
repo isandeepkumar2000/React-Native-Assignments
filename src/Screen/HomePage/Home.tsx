@@ -1,12 +1,6 @@
 import React, {useState} from 'react';
 import {RadioButton} from 'react-native-paper';
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {View, TextInput, StyleSheet, Text} from 'react-native';
 import {
   TextStyleAdvancedSettling,
   TextStyleBody,
@@ -15,13 +9,18 @@ import {
   TextStyleTeam,
 } from './styledcomponents';
 import CustomButton from '../../utils/customButton';
-export default function Home({navigation}) {
-  const [hostTeam, setHostTeam] = useState('');
-  const [visitorTeam, setVisitorTeam] = useState('');
-  const [over, setOver] = useState('');
-  const [activeTextInput, setActiveTextInput] = useState(null);
-  const [selectedValue, setSelectedValue] = useState('option1');
-  const [selectedValueOpted, setSelectedValueOpted] = useState('option1');
+type HomeProps = {
+  navigation: any;
+};
+
+export default function Home({navigation}: HomeProps) {
+  const [hostTeam, setHostTeam] = useState<string>('');
+  const [visitorTeam, setVisitorTeam] = useState<string>('');
+  const [over, setOver] = useState<string>('');
+  const [activeTextInput, setActiveTextInput] = useState<string | null>(null);
+  const [selectedValue, setSelectedValue] = useState<string>('option1');
+  const [selectedValueOpted, setSelectedValueOpted] =
+    useState<string>('option1');
 
   const handleValueChange = (value: any) => {
     setSelectedValue(value);

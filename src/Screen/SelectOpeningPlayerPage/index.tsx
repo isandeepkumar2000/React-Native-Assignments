@@ -1,18 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image, ScrollView, Alert} from 'react-native';
+import {TextInput} from 'react-native-paper';
+import CustomButton from '../../utils/customButton';
 import {
   TextStyleInputSection,
   TextStyleInputSelectedPlayer,
   TextStyleTeam,
 } from '../HomePage/styledcomponents';
-import {TextInput} from 'react-native-paper';
-import CustomButton from '../../utils/customButton';
 
-const SelectOpeningPlayer = ({navigation}) => {
-  const [striker, setstriker] = useState('');
-  const [nonStricker, setNonStricker] = useState('');
-  const [openingBowler, setOpeningBowler] = useState('');
-  const [activeTextInput, setActiveTextInput] = useState(null);
+interface Props {
+  navigation: any;
+}
+
+const SelectOpeningPlayer: React.FC<Props> = ({navigation}) => {
+  const [striker, setStriker] = useState<string>('');
+  const [nonStriker, setNonStriker] = useState<string>('');
+  const [openingBowler, setOpeningBowler] = useState<string>('');
+  const [activeTextInput, setActiveTextInput] = useState<string | null>(null);
 
   const handleText1Focus = () => {
     setActiveTextInput('text1');
@@ -21,19 +25,20 @@ const SelectOpeningPlayer = ({navigation}) => {
   const handleText2Focus = () => {
     setActiveTextInput('text2');
   };
+
   const handleText3Focus = () => {
     setActiveTextInput('text3');
   };
 
-  const handleTextChangeHost = (newText: any) => {
-    setstriker(newText);
+  const handleTextChangeHost = (newText: string) => {
+    setStriker(newText);
   };
 
-  const handleTextChangevisitorTeam = (newText: any) => {
-    setNonStricker(newText);
+  const handleTextChangeVisitorTeam = (newText: string) => {
+    setNonStriker(newText);
   };
 
-  const handleTextChangevisitorOver = (newText: any) => {
+  const handleTextChangeVisitorOver = (newText: string) => {
     setOpeningBowler(newText);
   };
 
@@ -66,8 +71,8 @@ const SelectOpeningPlayer = ({navigation}) => {
             {backgroundColor: 'white'},
           ]}
           onFocus={handleText2Focus}
-          value={nonStricker}
-          onChangeText={handleTextChangevisitorTeam}
+          value={nonStriker}
+          onChangeText={handleTextChangeVisitorTeam}
           placeholder="Player name"
         />
       </TextStyleInputSelectedPlayer>
@@ -81,7 +86,7 @@ const SelectOpeningPlayer = ({navigation}) => {
           ]}
           onFocus={handleText3Focus}
           value={openingBowler}
-          onChangeText={handleTextChangevisitorOver}
+          onChangeText={handleTextChangeVisitorOver}
           placeholder="Player name"
         />
         <View>
@@ -98,6 +103,7 @@ const SelectOpeningPlayer = ({navigation}) => {
 };
 
 export default SelectOpeningPlayer;
+
 const styles = StyleSheet.create({
   textInput: {
     borderBottomWidth: 2,
