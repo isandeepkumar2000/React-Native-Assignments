@@ -1,33 +1,37 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, ScrollView, Alert} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
-const ScoreBoard = (count: string | number) => {
+const ScoreBoard = ({count}: any) => {
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 10,
-        marginBottom: -10,
-      }}>
-      <View>
-        <View>
-          <Text>Sandeep, 1st inning</Text>
-        </View>
-        <View style={styles.ScoreCountBox}>
-          <Text style={styles.textScore}>{count} - 2 </Text>
-          <Text style={{marginLeft: 5, marginTop: 10, fontSize: 18}}>
-            (3.5)
-          </Text>
-        </View>
-      </View>
-      <View style={{marginRight: 70}}>
+    <View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginTop: 10,
+          marginLeft: 10,
+          marginRight: 10,
+          marginBottom: -10,
+        }}>
         <View>
           <View>
-            <Text>CRR</Text>
+            <Text>Sandeep, 1st inning</Text>
           </View>
-          <View style={{marginTop: 30}}>
-            <Text>5.74</Text>
+          <View style={styles.ScoreCountBox}>
+            <Text style={styles.textScore}>{count} - 2 </Text>
+            <Text style={{marginLeft: 5, marginTop: 10, fontSize: 18}}>
+              (3.5)
+            </Text>
+          </View>
+        </View>
+        <View style={{marginRight: 70}}>
+          <View>
+            <View>
+              <Text>CRR</Text>
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text>5.74</Text>
+            </View>
           </View>
         </View>
       </View>
