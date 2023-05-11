@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
-import BowlingCard from './BowlerCart';
+import BowlingCard from '../BowlerBowlingCardPage/BowlerCart';
 
 const data = [
   {name: 'Sandeep', runs: 50, balls: 35, fours: 6, sixes: 2, sr: 142.85},

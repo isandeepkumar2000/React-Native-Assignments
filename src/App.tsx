@@ -3,9 +3,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Home from './Screen/HomePage/Home';
-import Login from './Screen/LoginPage/Login';
+import Login from './Screen/UserLoginPage/Login';
 import DetailsScorePage from './Screen/MatchDeatilsPage';
-import SelectOpeningPlayer from './Screen/SelectOpeningPlayerPage';
+import SelectOpeningPlayer from './Screen/SelectOpeningBatsman&BowlerPage';
 import CustomHeader from './utils/customHeader';
 import CustomHeadingDetailsPage from './utils/custonHadingDetailsPage';
 

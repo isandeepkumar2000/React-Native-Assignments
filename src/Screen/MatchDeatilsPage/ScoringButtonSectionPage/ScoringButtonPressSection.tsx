@@ -1,18 +1,17 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
-const BUTTON_SIZE = 60; // Change this value as desired
-
 const runList = [
   {zero: 0},
   {one: 1},
   {two: 2},
   {three: 3},
   {four: 4},
+  {five: 5},
   {six: 6},
 ];
 
-const ButtonList = ({onPress}: any) => {
+const ButtonList = ({onPress, onPresss}: any) => {
   return (
     <View style={styles.container}>
       {runList.map((button, index) => (
@@ -20,33 +19,57 @@ const ButtonList = ({onPress}: any) => {
           key={index}
           onPress={() => onPress(Object.values(button)[0])}
           style={styles.button}>
-          <Text style={styles.buttonText}>{Object.values(button)[0]}</Text>
+          <Text style={(styles.buttonText, {fontSize: 20})}>
+            {Object.values(button)[0]}
+          </Text>
         </TouchableOpacity>
       ))}
+
+      <TouchableOpacity>
+        <View style={styles.buttonDots}>
+          <Text style={styles.buttonText}>...</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
+export default ButtonList;
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginVertical: 20,
+    marginVertical: 5,
   },
   button: {
-    width: BUTTON_SIZE,
-    height: BUTTON_SIZE,
-    borderRadius: BUTTON_SIZE / 2,
+    width: 50,
+    height: 50,
+    borderRadius: 30,
     borderWidth: 2,
     borderColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
+    marginBottom: 8,
+    marginLeft: 5,
+    marginRight: 5,
   },
+
+  buttonDots: {
+    width: 50,
+    height: 50,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: 'green',
+    fontSize: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 5,
+    marginRight: 5,
+  },
+
   buttonText: {
     fontSize: 20,
+    fontWeight: 'bold',
   },
 });
-
-export default ButtonList;

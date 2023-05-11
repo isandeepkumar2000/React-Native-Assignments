@@ -37,6 +37,53 @@ export const TextStyleInputSection = styled.View`
   border-radius: 10px;
 `;
 
+export const TextStyleButtonSection = styled.View`
+  ${Platform.OS === 'android'
+    ? `elevation: 3;`
+    : `shadow-color: #1B1F23;
+       shadow-offset: {
+         width: 0;
+         height: 0.5;
+       };
+       shadow-opacity: 0.15;
+       shadow-radius: 3;`}
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 10px 10px 7px;
+  margin: -5px 0px 0px 0px;
+`;
+
+export const TextStyleScoreSection = styled.View`
+  ${Platform.OS === 'android'
+    ? `elevation: 3;`
+    : `shadow-color: #1B1F23;
+       shadow-offset: {
+         width: 0;
+         height: 0.5;
+       };
+       shadow-opacity: 0.15;
+       shadow-radius: 3;`}
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin: -5px 10px 10px 10px;
+  padding: 0px 10px 20px;
+`;
+export const TextStyleWideSection = styled.View`
+  ${Platform.OS === 'android'
+    ? `elevation: 3;`
+    : `shadow-color: #1B1F23;
+       shadow-offset: {
+         width: 0;
+         height: 0.5;
+       };
+       shadow-opacity: 0.15;
+       shadow-radius: 3;`}
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin: -5px 10px 10px 10px;
+  padding: 0px 10px 20px;
+`;
+
 export const TextStyleInputSelectedPlayer = styled.View`
   padding: 0px 10px 20px;
   margin: 10px;

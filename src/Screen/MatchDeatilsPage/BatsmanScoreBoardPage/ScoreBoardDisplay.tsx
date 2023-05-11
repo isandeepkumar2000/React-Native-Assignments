@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-const ScoreBoard = ({count}: any) => {
+const ScoreBoard = ({count, wicket, overCount}: any) => {
   return (
     <View>
       <View
@@ -18,9 +18,11 @@ const ScoreBoard = ({count}: any) => {
             <Text>Sandeep, 1st inning</Text>
           </View>
           <View style={styles.ScoreCountBox}>
-            <Text style={styles.textScore}>{count} - 2 </Text>
+            <Text style={styles.textScore}>
+              {count} - {wicket}{' '}
+            </Text>
             <Text style={{marginLeft: 5, marginTop: 10, fontSize: 18}}>
-              (3.5)
+              {overCount}
             </Text>
           </View>
         </View>
