@@ -2,7 +2,20 @@ import React, {useState} from 'react';
 import {View, Text} from 'react-native';
 import {CheckBox} from 'react-native-elements';
 
-const WideNoballWicketLegbye = ({onChange}: any) => {
+interface Props {
+  checked: boolean;
+  onChangeWicket: (isChecked: boolean) => void;
+  onChangeWide: (isChecked: boolean) => void;
+  onChangeNoBall: (isChecked: boolean) => void;
+  onChangeLegBye: (isChecked: boolean) => void;
+}
+
+const WideNoballWicketLegbye = ({
+  onChangeWicket,
+  onChangeWide,
+  onChangeNoBall,
+  onChangeLegBye,
+}: Props) => {
   const [checkboxes, setCheckboxes] = useState([
     {value: 'Wide', checked: false},
     {value: 'No Ball', checked: false},
@@ -15,8 +28,18 @@ const WideNoballWicketLegbye = ({onChange}: any) => {
     newCheckboxes[index].checked = isChecked;
     setCheckboxes(newCheckboxes);
 
-    if (index === 2 && isChecked) {
-      onChange(true);
+    switch (index) {
+      case 0:
+        onChangeWide(isChecked);
+        break;
+      case 1:
+        onChangeNoBall(isChecked);
+        break;
+      case 2:
+        onChangeWicket(isChecked);
+        break;
+      default:
+        break;
     }
   };
 

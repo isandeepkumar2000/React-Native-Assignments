@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image, ScrollView, Alert} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {TextInput} from 'react-native-paper';
 import CustomButton from '../../utils/customButton';
 import {
-  TextStyleInputSection,
   TextStyleInputSelectedPlayer,
   TextStyleTeam,
 } from '../HomePage/styledcomponents';
@@ -17,6 +18,17 @@ const SelectOpeningPlayer: React.FC<Props> = ({navigation}) => {
   const [nonStriker, setNonStriker] = useState<string>('');
   const [openingBowler, setOpeningBowler] = useState<string>('');
   const [activeTextInput, setActiveTextInput] = useState<string | null>(null);
+
+  const handleSave = async () => {
+    try {
+      await AsyncStorage.setItem('striker', striker);
+      await AsyncStorage.setItem('nonStriker', nonStriker);
+      await AsyncStorage.setItem('openingBowler', openingBowler);
+    } catch (error) {
+      console.log('Error saving data:', error);
+      Alert.alert('Error', 'Failed to save data');
+    }
+  };
 
   const handleText1Focus = () => {
     setActiveTextInput('text1');
@@ -32,14 +44,17 @@ const SelectOpeningPlayer: React.FC<Props> = ({navigation}) => {
 
   const handleTextChangeHost = (newText: string) => {
     setStriker(newText);
+    handleSave();
   };
 
   const handleTextChangeVisitorTeam = (newText: string) => {
     setNonStriker(newText);
+    handleSave();
   };
 
-  const handleTextChangeVisitorOver = (newText: string) => {
+  const handleTextChangeBowlerOver = (newText: string) => {
     setOpeningBowler(newText);
+    handleSave();
   };
 
   const setMatchPlayer = () => {
@@ -86,7 +101,7 @@ const SelectOpeningPlayer: React.FC<Props> = ({navigation}) => {
           ]}
           onFocus={handleText3Focus}
           value={openingBowler}
-          onChangeText={handleTextChangeVisitorOver}
+          onChangeText={handleTextChangeBowlerOver}
           placeholder="Player name"
         />
         <View>

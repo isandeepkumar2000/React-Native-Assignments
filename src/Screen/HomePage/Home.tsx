@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {RadioButton} from 'react-native-paper';
 import {View, TextInput, StyleSheet, Text} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   TextStyleAdvancedSettling,
   TextStyleBody,
@@ -22,6 +24,16 @@ export default function Home({navigation}: HomeProps) {
   const [selectedValueOpted, setSelectedValueOpted] =
     useState<string>('option1');
 
+  const handleSave = async () => {
+    try {
+      await AsyncStorage.setItem('host', hostTeam);
+      await AsyncStorage.setItem('visitor', visitorTeam);
+      await AsyncStorage.setItem('over', over);
+    } catch (error) {
+      console.log('Error saving data:', error);
+    }
+  };
+
   const handleValueChange = (value: any) => {
     setSelectedValue(value);
   };
@@ -40,12 +52,30 @@ export default function Home({navigation}: HomeProps) {
     setActiveTextInput('text3');
   };
 
+  useEffect(() => {
+    retrieveData();
+  }, []);
+
+  const retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('key');
+      if (value !== null) {
+        setHostTeam(value);
+        setVisitorTeam(value);
+      }
+    } catch (error) {
+      console.log('Error retrieving data:', error);
+    }
+  };
+
   const handleTextChangeHost = (newText: any) => {
     setHostTeam(newText);
+    handleSave();
   };
 
   const handleTextChangevisitorTeam = (newText: any) => {
     setVisitorTeam(newText);
+    handleSave();
   };
 
   const handleTextChangevisitorOver = (newText: any) => {
@@ -92,7 +122,7 @@ export default function Home({navigation}: HomeProps) {
               status={selectedValue === 'option1' ? 'checked' : 'unchecked'}
               onPress={() => handleValueChange('option1')}
             />
-            <Text>Host Team</Text>
+            <Text>Host: {hostTeam}</Text>
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <RadioButton
@@ -101,7 +131,7 @@ export default function Home({navigation}: HomeProps) {
               status={selectedValue === 'option2' ? 'checked' : 'unchecked'}
               onPress={() => handleValueChange('option2')}
             />
-            <Text>Visitor Team</Text>
+            <Text>Visitor: {visitorTeam}</Text>
           </View>
         </View>
       </TextStyleRadioButton>

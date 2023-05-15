@@ -1,11 +1,16 @@
-import React from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 import BowlingCard from '../BowlerBowlingCardPage/BowlerCart';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const data = [
-  {name: 'Sandeep', runs: 50, balls: 35, fours: 6, sixes: 2, sr: 142.85},
-  {name: 'Sanjana', runs: 30, balls: 25, fours: 4, sixes: 1, sr: 120.0},
-];
+interface typeofScore {
+  name: string;
+  runs: number;
+  balls: number;
+  fours: number;
+  sixes: number;
+  sr: number;
+}
 
 function TableHeader() {
   return (
@@ -16,6 +21,19 @@ function TableHeader() {
       <Text style={styles.tableHeaderCell}>4s</Text>
       <Text style={styles.tableHeaderCell}>6s</Text>
       <Text style={styles.tableHeaderCell}>SR</Text>
+    </View>
+  );
+}
+
+function TableRow({name, runs, balls, fours, sixes, sr}: typeofScore) {
+  return (
+    <View style={styles.tableRow}>
+      <Text style={styles.tableCellNames}>{name}</Text>
+      <Text style={styles.tableCell}>{runs}</Text>
+      <Text style={styles.tableCell}>{balls}</Text>
+      <Text style={styles.tableCell}>{fours}</Text>
+      <Text style={styles.tableCell}>{sixes}</Text>
+      <Text style={styles.tableCell}>{sr.toFixed(2)}</Text>
     </View>
   );
 }
@@ -33,27 +51,44 @@ function TableHeaderBowler() {
   );
 }
 
-function TableRow({data}: any) {
-  return (
-    <View style={styles.tableRow}>
-      <Text style={styles.tableCellNames}>{data.name}</Text>
-      <Text style={styles.tableCell}>{data.runs}</Text>
-      <Text style={styles.tableCell}>{data.balls}</Text>
-      <Text style={styles.tableCell}>{data.fours}</Text>
-      <Text style={styles.tableCell}>{data.sixes}</Text>
-      <Text style={styles.tableCell}>{data.sr.toFixed(2)}</Text>
-    </View>
-  );
-}
-
 function Table() {
+  const [striker, setStriker] = useState<string>('');
+  const [nonStriker, setNonStriker] = useState<string>('');
+
+  useEffect(() => {
+    fetchData();
+  });
+
+  const fetchData = async () => {
+    try {
+      const value1 = await AsyncStorage.getItem('striker');
+      setStriker(value1 || '');
+      const value2 = await AsyncStorage.getItem('nonStriker');
+      setNonStriker(value2 || '');
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
-    <FlatList
-      data={data}
-      renderItem={({item}) => <TableRow data={item} />}
-      ListHeaderComponent={<TableHeader />}
-      keyExtractor={item => item.name}
-    />
+    <View>
+      <TableHeader />
+      <TableRow
+        name={striker}
+        runs={50}
+        balls={35}
+        fours={6}
+        sixes={2}
+        sr={142.85}
+      />
+      <TableRow
+        name={nonStriker}
+        runs={30}
+        balls={25}
+        fours={4}
+        sixes={1}
+        sr={120.0}
+      />
+    </View>
   );
 }
 
@@ -66,8 +101,6 @@ function CricketScoreboard() {
     </View>
   );
 }
-
-export default CricketScoreboard;
 
 const styles = StyleSheet.create({
   container: {
@@ -86,7 +119,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
   },
-
   tableNameHeaderCell: {
     flex: 1,
     fontWeight: 'bold',
@@ -94,13 +126,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingRight: 35,
     paddingLeft: 0,
-  },
-
-  tableHeaderNameCell: {
-    flex: 1,
-    fontWeight: 'bold',
-    fontSize: 12,
-    textAlign: 'center',
   },
   tableRow: {
     flexDirection: 'row',
@@ -118,7 +143,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     textAlign: 'left',
   },
-
   tableCellNames: {
     flex: 1,
     fontSize: 13,
@@ -128,3 +152,5 @@ const styles = StyleSheet.create({
     color: 'green',
   },
 });
+
+export default CricketScoreboard;

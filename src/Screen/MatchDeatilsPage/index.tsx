@@ -20,24 +20,88 @@ const DetailsScorePage = () => {
   const [ballsBowled, setBallsBowled] = useState(0);
   const [wicketOccurred, setWicketOccurred] = useState(false);
   const [overCount, setOverCount] = useState(0.0);
+  const [wideChecked, setWideChecked] = useState(false);
+  const [noBallChecked, setNoBallChecked] = useState(false);
+  const [legByeChecked, setLegByeChecked] = useState(false);
 
   const handleSelect = (buttonValue: number) => {
+    let updatedButtonValue = buttonValue;
+    if (selectedValues[selectedValues.length - 1] === 1) {
+      updatedButtonValue += 1;
+    }
     let newCount = overCount + 0.1;
-    setCount(count + buttonValue);
-    setSelectedValues([...selectedValues, buttonValue]);
-    setBallsBowled(ballsBowled + 1);
-    if (wicketOccurred) {
-      setWicket(wicket + 1);
-      setWicketOccurred(false);
+
+    switch (true) {
+      case noBallChecked:
+        setCount(count + updatedButtonValue);
+        setBallsBowled(ballsBowled + 1);
+        setSelectedValues([...selectedValues, buttonValue]);
+        setNoBallChecked(false);
+        break;
+
+      case wicketOccurred:
+        setCount(count + updatedButtonValue);
+        setWicket(wicket + 1);
+        setWicketOccurred(false);
+        setSelectedValues([...selectedValues, buttonValue]);
+        setBallsBowled(ballsBowled + 1);
+
+        if (newCount > Math.floor(overCount) + 0.6) {
+          newCount = Math.floor(overCount) + 1.0;
+        }
+        setOverCount(newCount);
+        break;
+
+      case wideChecked:
+        setCount(count + updatedButtonValue);
+        setSelectedValues([...selectedValues, buttonValue]);
+        setWideChecked(false);
+        break;
+
+      case legByeChecked:
+        setCount(count + updatedButtonValue);
+        setSelectedValues([...selectedValues, buttonValue]);
+        setLegByeChecked(false);
+        break;
+
+      default:
+        setCount(count + updatedButtonValue);
+        setSelectedValues([...selectedValues, buttonValue]);
+        setBallsBowled(ballsBowled + 1);
+
+        if (newCount > Math.floor(overCount) + 0.6) {
+          newCount = Math.floor(overCount) + 1.0;
+        }
+        setOverCount(newCount);
+        break;
     }
-    if (newCount > Math.floor(overCount) + 0.6) {
-      newCount = Math.floor(overCount) + 1.0;
-    }
-    setOverCount(newCount);
   };
 
   const handleWicketCheckboxChange = (checked: any) => {
     setWicketOccurred(checked);
+    setCount(count);
+  };
+
+  const handleWideCheckboxChange = (checked: any) => {
+    setWideChecked(checked);
+    if (checked) {
+      setSelectedValues([...selectedValues, 1]);
+    }
+  };
+  const handlenoBallCheckboxChange = (checked: any) => {
+    setNoBallChecked(checked);
+    if (checked) {
+      setSelectedValues([...selectedValues, 1]);
+      setCount(count + 1);
+    }
+  };
+
+  const handleLegByeBallCheckboxChange = (checked: any) => {
+    setLegByeChecked(checked);
+    if (checked) {
+      setSelectedValues([...selectedValues]);
+      setCount(count);
+    }
   };
 
   return (
@@ -59,7 +123,10 @@ const DetailsScorePage = () => {
         <TextStyleWideSection>
           <WideNoballWicketLegbye
             checked={wicketOccurred}
-            onChange={handleWicketCheckboxChange}
+            onChangeWicket={handleWicketCheckboxChange}
+            onChangeWide={handleWideCheckboxChange}
+            onChangeNoBall={handlenoBallCheckboxChange}
+            onChangeLegBye={handleLegByeBallCheckboxChange}
           />
         </TextStyleWideSection>
       </View>
