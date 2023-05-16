@@ -1,19 +1,21 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import CustomButton from '../../../utils/customButton';
 
 const ButtonSection = () => {
+  const {width} = Dimensions.get('window');
+  const buttonWidth = width * 0.24;
+  const buttonHeight = buttonWidth * 0.4;
+
   return (
     <View>
       <View style={styles.textScore}>
         <Text>
           <CustomButton
             style={{
-              width: 100,
-              height: 40,
-              fontSize: 12,
-              marginTop: 10,
-              marginBottom: 10,
+              width: buttonWidth,
+              height: buttonHeight,
+              fontSize: buttonHeight * 0.2,
             }}
             title="Undo"
             color="#2f8520"
@@ -24,11 +26,9 @@ const ButtonSection = () => {
         <Text>
           <CustomButton
             style={{
-              width: 100,
-              height: 40,
-              fontSize: 12,
-              marginTop: 10,
-              marginBottom: 10,
+              width: buttonWidth,
+              height: buttonHeight,
+              fontSize: buttonHeight * 0.2,
             }}
             title="Switch"
             color="#2f8520"
@@ -39,11 +39,9 @@ const ButtonSection = () => {
         <Text>
           <CustomButton
             style={{
-              width: 100,
-              height: 40,
-              fontSize: 12,
-              marginTop: 10,
-              marginBottom: 10,
+              width: buttonWidth,
+              height: buttonHeight,
+              fontSize: buttonHeight * 0.2,
             }}
             title="Retire"
             color="#2f8520"
@@ -58,8 +56,7 @@ export default ButtonSection;
 
 const styles = StyleSheet.create({
   textScore: {
-    marginRight: 10,
-    marginBottom: 2,
     marginTop: 2,
+    marginRight: 5,
   },
 });

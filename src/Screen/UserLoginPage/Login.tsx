@@ -42,7 +42,7 @@ export default function Login({navigation}: LoginProps) {
   };
 
   const setData = () => {
-    if (username) {
+    if (username.length === 0) {
       Alert.alert('Warning!', 'Please Write Your Username');
     } else {
       navigation.navigate('Home');
@@ -103,5 +103,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     marginTop: 30,
+    color: 'black',
   },
 });

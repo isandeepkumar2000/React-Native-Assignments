@@ -1,18 +1,17 @@
 import React from 'react';
 import {Pressable, Text, StyleSheet} from 'react-native';
 
-const CustomButton = (props: any) => {
+const MyButton = ({title, onPress}: any) => {
   return (
     <Pressable
-      onPress={props.onPressFunction}
+      onPress={onPress}
       hitSlop={{top: 10, bottom: 10, right: 10, left: 10}}
       android_ripple={{color: '#e4880f'}}
       style={({pressed}) => [
-        {backgroundColor: pressed ? '#dc9e9e' : props.color},
+        {backgroundColor: pressed ? '#dc9e9e' : '#31921d'},
         styles.button,
-        {...props.style},
       ]}>
-      <Text style={styles.text}>{props.title}</Text>
+      <Text style={styles.text}>{title}</Text>
     </Pressable>
   );
 };
@@ -34,4 +33,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomButton;
+export default MyButton;

@@ -106,7 +106,7 @@ const SelectOpeningPlayer: React.FC<Props> = ({navigation}) => {
         />
         <View>
           <CustomButton
-            style={{width: 372, marginTop: 30}}
+            style={{width: 'auto', marginTop: 30}}
             title="Start Match"
             color="#2f8520"
             onPressFunction={setMatchPlayer}

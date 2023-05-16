@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, Dimensions} from 'react-native';
 import {Platform} from 'react-native';
+const {width} = Dimensions.get('window');
 
 export const TextStyleTeam = styled.Text`
   color: #096409;
@@ -68,6 +69,7 @@ export const TextStyleScoreSection = styled.View`
   margin: -5px 10px 10px 10px;
   padding: 0px 10px 20px;
 `;
+
 export const TextStyleWideSection = styled.View`
   ${Platform.OS === 'android'
     ? `elevation: 3;`

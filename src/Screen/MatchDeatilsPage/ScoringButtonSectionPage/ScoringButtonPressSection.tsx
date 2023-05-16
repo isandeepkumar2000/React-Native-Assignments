@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 
 const runList = [
   {zero: 0},
@@ -11,7 +17,7 @@ const runList = [
   {six: 6},
 ];
 
-const ButtonList = ({onPress, onPresss}: any) => {
+const ButtonList = ({onPress}: any) => {
   return (
     <View style={styles.container}>
       {runList.map((button, index) => (
@@ -19,9 +25,7 @@ const ButtonList = ({onPress, onPresss}: any) => {
           key={index}
           onPress={() => onPress(Object.values(button)[0])}
           style={styles.button}>
-          <Text style={(styles.buttonText, {fontSize: 20})}>
-            {Object.values(button)[0]}
-          </Text>
+          <Text style={styles.buttonText}>{Object.values(button)[0]}</Text>
         </TouchableOpacity>
       ))}
 
@@ -33,7 +37,12 @@ const ButtonList = ({onPress, onPresss}: any) => {
     </View>
   );
 };
+
 export default ButtonList;
+
+const {width} = Dimensions.get('window');
+const buttonSize = width * 0.12;
+const marginHorizontal = (width - buttonSize * 7) / 12;
 
 const styles = StyleSheet.create({
   container: {
@@ -41,35 +50,33 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginVertical: 5,
+    marginHorizontal: marginHorizontal,
   },
   button: {
-    width: 50,
-    height: 50,
-    borderRadius: 30,
+    width: buttonSize,
+    height: buttonSize,
+    borderRadius: buttonSize / 2,
     borderWidth: 2,
     borderColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,
-    marginLeft: 5,
-    marginRight: 5,
+    marginLeft: marginHorizontal / 2,
+    marginRight: marginHorizontal / 2,
   },
-
   buttonDots: {
-    width: 50,
-    height: 50,
-    borderRadius: 30,
+    width: buttonSize,
+    height: buttonSize,
+    borderRadius: buttonSize / 2,
     borderWidth: 2,
     borderColor: 'green',
-    fontSize: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 5,
-    marginRight: 5,
+    marginLeft: marginHorizontal / 2,
+    marginRight: marginHorizontal / 2,
   },
-
   buttonText: {
-    fontSize: 20,
+    fontSize: buttonSize * 0.4,
     fontWeight: 'bold',
   },
 });

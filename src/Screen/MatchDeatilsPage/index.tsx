@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, Button, Modal, StyleSheet, TextInput} from 'react-native';
 import {
   TextStyleButtonSection,
   TextStyleInputSection,
@@ -12,6 +12,8 @@ import ValueDisplay from './PerOverCountBowlingPage/PerOverCountScoreBalls';
 import ButtonList from './ScoringButtonSectionPage/ScoringButtonPressSection';
 import ButtonSection from './RetireUndoSwitchBatsmanPage/RetireUndoSwitchBatsman';
 import WideNoballWicketLegbye from './WideNoballWicketSectionPage/wideNoball';
+import {InputText} from '../UserLoginPage/styledcomponents';
+import MyButton from '../../utils/myButton';
 
 const DetailsScorePage = () => {
   const [count, setCount] = useState(0);
@@ -24,11 +26,15 @@ const DetailsScorePage = () => {
   const [noBallChecked, setNoBallChecked] = useState(false);
   const [legByeChecked, setLegByeChecked] = useState(false);
 
-  const handleSelect = (buttonValue: number) => {
+  const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
+  const [bowlerName, setBowlerName] = useState(''); // State to store the bowler name
+
+  const handleSelect = (buttonValue: any) => {
     let updatedButtonValue = buttonValue;
     if (selectedValues[selectedValues.length - 1] === 1) {
-      updatedButtonValue += 1;
+      updatedButtonValue = buttonValue;
     }
+
     let newCount = overCount + 0.1;
 
     switch (true) {
@@ -48,6 +54,7 @@ const DetailsScorePage = () => {
 
         if (newCount > Math.floor(overCount) + 0.6) {
           newCount = Math.floor(overCount) + 1.0;
+          setShowPopup(true);
         }
         setOverCount(newCount);
         break;
@@ -71,10 +78,23 @@ const DetailsScorePage = () => {
 
         if (newCount > Math.floor(overCount) + 0.6) {
           newCount = Math.floor(overCount) + 1.0;
+          setShowPopup(true);
+          setSelectedValues([]);
         }
         setOverCount(newCount);
         break;
     }
+  };
+
+  const handleBowlerNameChange = (value: any) => {
+    setBowlerName(value);
+  };
+
+  const handlePopupSubmit = () => {
+    if (bowlerName.trim() !== '') {
+      console.log('Bowler Name:', bowlerName);
+    }
+    setShowPopup(false);
   };
 
   const handleWicketCheckboxChange = (checked: any) => {
@@ -132,26 +152,38 @@ const DetailsScorePage = () => {
       </View>
 
       <View
-        style={[
-          styles.UndoButtonStyle,
-          {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginHorizontal: 10,
-          },
-        ]}>
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginHorizontal: '2%',
+        }}>
         <View style={{flex: 0.3}}>
           <TextStyleButtonSection>
             <ButtonSection />
           </TextStyleButtonSection>
         </View>
-        <View style={{width: 10}} />
-        <View style={{flex: 0.7}}>
+        <View style={{flex: 0.7, marginLeft: '1%'}}>
           <TextStyleButtonSection>
             <ButtonList onPress={handleSelect} />
           </TextStyleButtonSection>
         </View>
       </View>
+
+      <Modal visible={showPopup} animationType="slide" transparent={true}>
+        <View style={styles.popup}>
+          <InputText
+            placeholder="Enter your Name"
+            value={bowlerName}
+            onChangeText={handleBowlerNameChange}
+          />
+
+          <MyButton
+            title="Submit Bowler Name"
+            color="#31921d"
+            onPress={handlePopupSubmit}
+          />
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -162,5 +194,19 @@ const styles = StyleSheet.create({
   UndoButtonStyle: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  popup: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    padding: 10,
+    marginBottom: 10,
   },
 });
